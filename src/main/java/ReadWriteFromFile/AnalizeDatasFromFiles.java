@@ -10,6 +10,7 @@ public class AnalizeDatasFromFiles {
     public static void main(String[] args) {
 
         String filesDirectory = "C:\\Users\\roman.stetsiuk\\Documents\\VK\\XTB_raports";
+        String filesDoneDirectory = "C:\\Users\\roman.stetsiuk\\Documents\\VK\\XTB_raports\\DONE\\";
 
         //        Get list of file in PC directory
         File directory = new File(filesDirectory);
@@ -17,8 +18,6 @@ public class AnalizeDatasFromFiles {
 
         for (File file : filesList) {
             if (file.isFile()) {
-                String fileName = file.getName();
-
                 //            Read lines from files
                 try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
                     String currentLine;
@@ -30,6 +29,12 @@ public class AnalizeDatasFromFiles {
                     e.printStackTrace();
                 }
 
+                //            move file on new Directory
+                try {
+                    file.renameTo(new File(filesDoneDirectory + "DONE_" + file.getName()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
