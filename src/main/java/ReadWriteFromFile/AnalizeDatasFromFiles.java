@@ -62,6 +62,21 @@ public class AnalizeDatasFromFiles {
                                     endOfDay +
                                     "\n**********************************************************\n");
                         }
+
+//                        Get data from account balance:
+                        if (currentLine.contains("Account Balance")) {
+                            actionNumber = 1;
+                        }
+                        if (currentLine.contains("Balance") && actionNumber == 1) {
+                            logger.info("Account Balance:\n");
+                        }
+                        if (containsNumber(currentLine) && actionNumber == 1) {
+                            String[] getColumnValue = currentLine.split("\t");
+                            for (String el : getColumnValue) {
+                                System.out.println(el);
+                            }
+                            System.out.println("---------------------------------------------");
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -76,6 +91,16 @@ public class AnalizeDatasFromFiles {
             }
         }
 
+    }
+
+    private static boolean containsNumber(String line) {
+        String[] numbersValue = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        for (String checkLine : numbersValue) {
+            if (line.contains(checkLine)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
