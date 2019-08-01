@@ -12,6 +12,18 @@ public class AnalizeDatasFromFiles {
 
     public static void main(String[] args) {
 
+        String endOfDay = "";
+
+        String balance = "";
+        String equity = "";
+        String margin = "";
+        String freeMargin = "";
+
+        int actionNumber = 0;
+        int closedTransactions = 0;
+        int openTransactions = 0;
+
+
         String filesDirectory = "C:\\Users\\roman.stetsiuk\\Documents\\VK\\XTB_raports";
         String filesDoneDirectory = "C:\\Users\\roman.stetsiuk\\Documents\\VK\\XTB_raports\\DONE\\";
 
@@ -24,18 +36,15 @@ public class AnalizeDatasFromFiles {
         FileHandler fh;
 
         try {
-            fh = new FileHandler("C:\\Users\\roman.stetsiuk\\IdeaProjects\\MyProgramsByLearn\\logs\\LogFile.log");
+            fh = new FileHandler("C:\\Users\\roman.stetsiuk\\IdeaProjects\\MyFunctionsByLearnJava\\logs\\LogFile.log");
             logger.addHandler(fh);
             SimpleFormatter formatter = new SimpleFormatter();
             fh.setFormatter(formatter);
-
-            logger.info("Hello");
         } catch (SecurityException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
 
         for (File file : filesList) {
@@ -45,7 +54,14 @@ public class AnalizeDatasFromFiles {
                     String currentLine;
 
                     while ((currentLine = bufferedReader.readLine()) != null) {
-                        System.out.println(currentLine);
+//                        Get Date raport and write this information in LogFile
+                        if (currentLine.contains("End of day")) {
+                            endOfDay = currentLine;
+                            endOfDay.trim();
+                            logger.info("\n**********************************************************\n" +
+                                    endOfDay +
+                                    "\n**********************************************************\n");
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
